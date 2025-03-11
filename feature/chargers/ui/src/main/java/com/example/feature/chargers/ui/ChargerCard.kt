@@ -1,12 +1,7 @@
 package com.example.feature.chargers.ui
 
-import android.annotation.SuppressLint
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,16 +17,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.core.ui.conditional
+import com.example.feature.chargers.domain.model.AddressInfo
 import com.example.feature.chargers.domain.model.PointOfInterest
+import com.example.feature.chargers.domain.model.StatusType
 
 @Composable
 fun ChargerCard(
     charger: PointOfInterest,
 ) {
+    fun handleOnClick() {
+
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,6 +43,10 @@ fun ChargerCard(
             .padding(bottom = 8.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(MaterialTheme.colorScheme.surfaceContainer)
+            .clickable(
+                enabled = true,
+                onClick = { handleOnClick() }
+            )
     ) {
         Row {
             if (charger.MediaItems.isNotEmpty()) {
@@ -58,6 +66,26 @@ fun ChargerCard(
                         textAlign = TextAlign.Start
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
+                        Box(
+                            modifier = Modifier
+                                .size(8.dp)
+                                .clip(RoundedCornerShape(100))
+                                .conditional(
+                                    charger.StatusType == StatusType.OPERATIONAL, {
+                                        background(Color(0xff90be6d))
+                                    }
+                                )
+                                .conditional(
+                                    charger.StatusType == StatusType.UNKNOWN, {
+                                        background(Color(0xff577590))
+                                    }
+                                )
+                                .conditional(
+                                    charger.StatusType == StatusType.PLANNED_FOR_FUTURE, {
+                                        background(Color(0xfff8961e))
+                                    }
+                                )
+                        )
                         Icon(
                             painter = painterResource(R.drawable.ic_local_gas_station),
                             contentDescription = null,
@@ -67,10 +95,73 @@ fun ChargerCard(
                             text = "${charger.AddressInfo.Distance}",
                             textAlign = TextAlign.End,
                             style = MaterialTheme.typography.labelSmall,
+                            modifier = Modifier.padding(start = 4.dp)
                         )
+
                     }
                 }
             }
         }
     }
+}
+
+var pointOfInterest = PointOfInterest(
+    ID = 1234,
+    UUID = "1234",
+    IsRecentlyVerified = true,
+    DateLastVerified = "yesterday",
+    GeneralComments = "Fonctionne correctement",
+    StatusType = StatusType.OPERATIONAL,
+    DateLastStatusUpdate = "yesterday",
+    UserComments = emptyList(),
+    MediaItems = emptyList(),
+    AddressInfo = AddressInfo(
+        ID = 4567,
+        AddressLine1 = "Place du marché",
+        Latitude = -44.567,
+        Longitude = 23.987,
+        Distance = "3.4567",
+        Title = "Place du marché",
+        AddressLine2 = "",
+        Town = "",
+        StateOrProvince = "",
+        Postcode = "",
+        CountryID = 0,
+        ContactTelephone1 = "",
+        ContactTelephone2 = "",
+        ContactEmail = "",
+        AccessComments = "",
+        RelatedURL = ""
+    ),
+    UsageCost = "",
+    NumberOfPoints = 2
+)
+
+@Preview
+@Composable
+fun OperationalChargerCardPreview() {
+    ChargerCard(
+        pointOfInterest
+    )
+}
+
+
+@Preview
+@Composable
+fun UnknownChargerCardPreview() {
+    ChargerCard(
+        pointOfInterest.copy(
+            StatusType = StatusType.UNKNOWN
+        )
+    )
+}
+
+@Preview
+@Composable
+fun FutureChargerCardPreview() {
+    ChargerCard(
+        pointOfInterest.copy(
+            StatusType = StatusType.PLANNED_FOR_FUTURE
+        )
+    )
 }

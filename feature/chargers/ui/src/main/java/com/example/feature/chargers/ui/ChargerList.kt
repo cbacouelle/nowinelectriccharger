@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.feature.chargers.domain.model.AddressInfo
 import com.example.feature.chargers.domain.model.PointOfInterest
+import com.example.feature.chargers.domain.model.StatusType
 import com.example.theme.NowinelectricchargerTheme
 
 @Composable
@@ -86,7 +87,7 @@ private fun ChargerListSuccessPreview() {
             IsRecentlyVerified = true,
             DateLastVerified = "yesterday",
             GeneralComments = "Fonctionne correctement",
-            StatusTypeID = 1,
+            StatusType = StatusType.UNKNOWN,
             DateLastStatusUpdate = "yesterday",
             UserComments = emptyList(),
             MediaItems = emptyList(),

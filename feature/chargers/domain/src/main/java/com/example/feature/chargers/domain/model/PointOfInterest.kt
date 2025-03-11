@@ -8,12 +8,19 @@ data class PointOfInterest(
     val UsageCost: String?,
     val NumberOfPoints: Int?,
     val GeneralComments: String?,
-    val StatusTypeID: Int,
+    val StatusType: StatusType,
     val DateLastStatusUpdate: String,
     val UserComments: List<UserComment>,
     val MediaItems: List<MediaItem>,
     val AddressInfo: AddressInfo
 )
+
+enum class StatusType {
+    OPERATIONAL,
+    UNKNOWN,
+    PLANNED_FOR_FUTURE
+}
+
 
 data class MediaItem(
     val ID: Int,

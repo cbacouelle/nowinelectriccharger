@@ -10,6 +10,7 @@ import com.example.feature.chargers.domain.model.AddressInfo
 import com.example.feature.chargers.domain.model.CommentType
 import com.example.feature.chargers.domain.model.MediaItem
 import com.example.feature.chargers.domain.model.PointOfInterest
+import com.example.feature.chargers.domain.model.StatusType
 import com.example.feature.chargers.domain.model.User
 import com.example.feature.chargers.domain.model.UserComment
 
@@ -24,7 +25,12 @@ class PointOfInterestMapper {
             UsageCost = pointOfInterestDto.UsageCost,
             NumberOfPoints = pointOfInterestDto.NumberOfPoints,
             GeneralComments = pointOfInterestDto.GeneralComments,
-            StatusTypeID = pointOfInterestDto.StatusTypeID,
+            StatusType = when (pointOfInterestDto.StatusTypeID) {
+                0 -> StatusType.UNKNOWN
+                50 -> StatusType.OPERATIONAL
+                150 -> StatusType.PLANNED_FOR_FUTURE
+                else -> StatusType.UNKNOWN
+            },
             DateLastStatusUpdate = pointOfInterestDto.DateLastStatusUpdate,
             MediaItems = pointOfInterestDto.MediaItems.orEmpty().map(MediaItemMapper::map),
             UserComments = pointOfInterestDto.UserComments.orEmpty().map(UserCommentMapper::map),
