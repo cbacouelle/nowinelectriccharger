@@ -58,6 +58,13 @@ dependencies {
     implementation(libs.play.services.location)
 
     implementation(projects.feature.search.ui)
+    implementation(projects.feature.search.data)
+    implementation(projects.feature.search.domain)
+    implementation(projects.feature.chargers.domain)
+    implementation(projects.feature.chargers.ui)
+    implementation(projects.feature.chargers.data)
+    implementation(projects.network)
+    implementation(projects.theme)
 
     testImplementation(libs.junit)
 

@@ -20,6 +20,8 @@
             <option value="$PROJECT_DIR$/feature/search/data" />
             <option value="$PROJECT_DIR$/feature/search/domain" />
             <option value="$PROJECT_DIR$/feature/search/ui" />
+            <option value="$PROJECT_DIR$/network" />
+            <option value="$PROJECT_DIR$/theme" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

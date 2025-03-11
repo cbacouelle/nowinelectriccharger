@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
+
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 android {
@@ -33,10 +37,23 @@ android {
 }
 
 dependencies {
+    ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.retrofit.core)
+    implementation(libs.hilt.android)
+    implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.moshi.core)
+    implementation(libs.moshi.adapter)
+    implementation(libs.moshi.codegen)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(projects.feature.chargers.domain)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

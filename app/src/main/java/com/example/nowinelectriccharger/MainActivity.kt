@@ -15,8 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
-import com.example.feature.search.ui.SearchViewModel
-import com.example.nowinelectriccharger.ui.theme.NowinelectricchargerTheme
+import com.example.feature.chargers.ui.ChargerViewModel
+import com.example.theme.NowinelectricchargerTheme
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private val LOCATION_PERMISSION_REQUEST_CODE = 1001
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private val searchViewModel: SearchViewModel by viewModels()
+    private val chargerViewModel: ChargerViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient.getCurrentLocation(100, cancellationTokenSource.token)
             .addOnSuccessListener { location ->
                 println("Location: ${location.latitude} ${location.longitude}")
-                searchViewModel.setCurrentLocation(location)
+                chargerViewModel.setCurrentLocation(location)
             }
             .addOnFailureListener { exception ->
                 println("Location Oops location failed with exception: $exception")
@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
 @Preview(showBackground = true)
 @Composable
 fun AppPreview() {
-    NowinelectricchargerTheme {
+    com.example.theme.NowinelectricchargerTheme {
         NowInElectricChargerApp()
     }
 }
