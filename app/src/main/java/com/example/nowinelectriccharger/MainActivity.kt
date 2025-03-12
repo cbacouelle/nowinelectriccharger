@@ -39,9 +39,13 @@ class MainActivity : AppCompatActivity() {
 
         enableEdgeToEdge()
         setContent {
+            val appState = rememberNowInElectricChargerAppState();
             NowinelectricchargerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NowInElectricChargerApp(modifier = Modifier.padding(innerPadding))
+                    NowInElectricChargerApp(
+                        appState,
+                        viewModel = chargerViewModel,
+                        modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -74,7 +78,6 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationClient.getCurrentLocation(100, cancellationTokenSource.token)
             .addOnSuccessListener { location ->
-                println("Location: ${location.latitude} ${location.longitude}")
                 chargerViewModel.setCurrentLocation(location)
             }
             .addOnFailureListener { exception ->
@@ -103,13 +106,5 @@ class MainActivity : AppCompatActivity() {
         } else {
             true
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AppPreview() {
-    com.example.theme.NowinelectricchargerTheme {
-        NowInElectricChargerApp()
     }
 }

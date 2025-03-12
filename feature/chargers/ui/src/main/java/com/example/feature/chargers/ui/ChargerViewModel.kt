@@ -20,11 +20,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChargerViewModel @Inject constructor(
-    private val getElectricChargersUseCase: GetElectricChargersUseCase
+    private val getElectricChargersUseCase: GetElectricChargersUseCase,
 ) : ViewModel() {
 
     private val _currentLocation = MutableStateFlow<Location?>(null)
-    private val currentLocation = _currentLocation.asStateFlow();
+    private val currentLocation = _currentLocation.asStateFlow()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val electricChargersViewState: StateFlow<ChargerViewState> =
