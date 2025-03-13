@@ -24,9 +24,14 @@ class DetailViewModel @Inject constructor(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val detailViewState = repository.pointOfInterests.mapLatest { pointOfInterests ->
-        DetailViewState.Success(poi = pointOfInterests.first { pointOfInterest ->
+        val poi = pointOfInterests.firstOrNull { pointOfInterest ->
             pointOfInterest.ID == poiId
-        })
+        }
+        if (poi == null) {
+            DetailViewState.Error(errorMessage = "No point of interest found for the given ID")
+        } else {
+            DetailViewState.Success(poi = poi)
+        }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
