@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.play.services.location)
 
     implementation(projects.feature.chargers.domain)
     implementation(projects.theme)

@@ -43,10 +43,9 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.appcompat)
     ksp(libs.hilt.compiler)
 
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,6 +57,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.play.services.location)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.datastore)
 
     implementation(projects.feature.search.ui)
     implementation(projects.feature.search.data)

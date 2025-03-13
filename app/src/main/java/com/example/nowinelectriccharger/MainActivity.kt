@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
 import com.example.feature.chargers.ui.ChargerViewModel
 import com.example.theme.NowinelectricchargerTheme
@@ -45,7 +43,8 @@ class MainActivity : AppCompatActivity() {
                     NowInElectricChargerApp(
                         appState,
                         viewModel = chargerViewModel,
-                        modifier = Modifier.padding(innerPadding))
+                        modifier = Modifier.padding(innerPadding)
+                    )
                 }
             }
         }

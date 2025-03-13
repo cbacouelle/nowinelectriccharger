@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.core.ui.shimmerEffect
 import com.example.feature.chargers.domain.model.AddressInfo
 import com.example.feature.chargers.domain.model.PointOfInterest
 import com.example.feature.chargers.domain.model.StatusType
@@ -23,6 +24,7 @@ import com.example.theme.NowinelectricchargerTheme
 @Composable
 fun ChargerList(
     viewState: ChargerViewState,
+    onChargerCardClick: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollableState = rememberLazyListState()
@@ -53,7 +55,10 @@ fun ChargerList(
                 contentPadding = PaddingValues(horizontal = 16.dp),
             ) {
                 items(viewState.chargers) { charger ->
-                    ChargerCard(charger)
+                    ChargerCard(
+                        charger = charger,
+                        onChargerCardClick = onChargerCardClick
+                    )
                 }
             }
 
@@ -70,7 +75,10 @@ fun ChargerList(
 private fun ChargerListLoadingPreview() {
     val viewState = ChargerViewState.Loading
     NowinelectricchargerTheme {
-        ChargerList(viewState)
+        ChargerList(
+            viewState = viewState,
+            onChargerCardClick = { }
+        )
     }
 }
 
@@ -112,6 +120,9 @@ private fun ChargerListSuccessPreview() {
     )
     val viewState = ChargerViewState.Success(chargers)
     NowinelectricchargerTheme {
-        ChargerList(viewState)
+        ChargerList(
+            viewState = viewState,
+            onChargerCardClick = { }
+        )
     }
 }

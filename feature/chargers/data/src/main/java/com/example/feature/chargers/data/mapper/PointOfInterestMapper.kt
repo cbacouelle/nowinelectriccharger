@@ -17,25 +17,28 @@ import com.example.feature.chargers.domain.model.UserComment
 class PointOfInterestMapper {
 
     companion object {
-        fun map(pointOfInterestDto: PointOfInterestDto): PointOfInterest = PointOfInterest(
-            ID = pointOfInterestDto.ID,
-            UUID = pointOfInterestDto.UUID,
-            IsRecentlyVerified = pointOfInterestDto.IsRecentlyVerified,
-            DateLastVerified = pointOfInterestDto.DateLastVerified,
-            UsageCost = pointOfInterestDto.UsageCost,
-            NumberOfPoints = pointOfInterestDto.NumberOfPoints,
-            GeneralComments = pointOfInterestDto.GeneralComments,
-            StatusType = when (pointOfInterestDto.StatusTypeID) {
-                0 -> StatusType.UNKNOWN
-                50 -> StatusType.OPERATIONAL
-                150 -> StatusType.PLANNED_FOR_FUTURE
-                else -> StatusType.UNKNOWN
-            },
-            DateLastStatusUpdate = pointOfInterestDto.DateLastStatusUpdate,
-            MediaItems = pointOfInterestDto.MediaItems.orEmpty().map(MediaItemMapper::map),
-            UserComments = pointOfInterestDto.UserComments.orEmpty().map(UserCommentMapper::map),
-            AddressInfo = AddressInfoMapper.map(pointOfInterestDto.AddressInfo)
-        )
+        fun map(pointOfInterestDto: PointOfInterestDto): PointOfInterest =
+            PointOfInterest(
+                ID = pointOfInterestDto.ID,
+                UUID = pointOfInterestDto.UUID,
+                IsRecentlyVerified = pointOfInterestDto.IsRecentlyVerified,
+                DateLastVerified = pointOfInterestDto.DateLastVerified,
+                UsageCost = pointOfInterestDto.UsageCost,
+                NumberOfPoints = pointOfInterestDto.NumberOfPoints,
+                GeneralComments = pointOfInterestDto.GeneralComments,
+                StatusType = when (pointOfInterestDto.StatusTypeID) {
+                    0 -> StatusType.UNKNOWN
+                    50 -> StatusType.OPERATIONAL
+                    150 -> StatusType.PLANNED_FOR_FUTURE
+                    else -> StatusType.UNKNOWN
+                },
+                DateLastStatusUpdate = pointOfInterestDto.DateLastStatusUpdate,
+                MediaItems = pointOfInterestDto.MediaItems.orEmpty().map(MediaItemMapper::map),
+                UserComments = pointOfInterestDto.UserComments.orEmpty()
+                    .map(UserCommentMapper::map),
+                AddressInfo = AddressInfoMapper.map(pointOfInterestDto.AddressInfo)
+            )
+
     }
 
 }

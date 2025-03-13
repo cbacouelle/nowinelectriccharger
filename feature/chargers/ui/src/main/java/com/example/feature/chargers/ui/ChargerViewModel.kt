@@ -1,6 +1,7 @@
 package com.example.feature.chargers.ui
 
 import android.location.Location
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.feature.chargers.domain.GetElectricChargersUseCase

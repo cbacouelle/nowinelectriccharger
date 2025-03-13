@@ -1,5 +1,8 @@
 package com.example.feature.chargers.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class PointOfInterest(
     val ID: Int,
     val UUID: String,
@@ -15,13 +18,14 @@ data class PointOfInterest(
     val AddressInfo: AddressInfo
 )
 
+@Serializable
 enum class StatusType {
     OPERATIONAL,
     UNKNOWN,
     PLANNED_FOR_FUTURE
 }
 
-
+@Serializable
 data class MediaItem(
     val ID: Int,
     val ChargePointID: Int,
@@ -36,6 +40,7 @@ data class MediaItem(
     val User: User,
 )
 
+@Serializable
 data class User(
     val ID: Int,
     val Username: String,
@@ -43,6 +48,7 @@ data class User(
     val ProfileImageURL: String,
 )
 
+@Serializable
 data class UserComment(
     val ID: Int,
     val ChargePointID: Int,
@@ -56,11 +62,13 @@ data class UserComment(
     val CheckinStatusTypeID: Int,
 )
 
+@Serializable
 data class CommentType(
     val ID: Int,
     val Title: String,
 )
 
+@Serializable
 data class AddressInfo(
     val ID: Int,
     val AddressLine1: String?,

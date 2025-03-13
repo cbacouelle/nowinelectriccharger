@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    api(libs.androidx.datastore)
+
     ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.core.ktx)

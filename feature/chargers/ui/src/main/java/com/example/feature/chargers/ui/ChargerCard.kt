@@ -20,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.core.ui.conditional
@@ -31,11 +30,8 @@ import com.example.feature.chargers.domain.model.StatusType
 @Composable
 fun ChargerCard(
     charger: PointOfInterest,
+    onChargerCardClick: (Int) -> Unit,
 ) {
-    fun handleOnClick() {
-
-    }
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,7 +41,9 @@ fun ChargerCard(
             .background(MaterialTheme.colorScheme.surfaceContainer)
             .clickable(
                 enabled = true,
-                onClick = { handleOnClick() }
+                onClick = {
+                    onChargerCardClick(charger.ID)
+                }
             )
     ) {
         Row {
@@ -137,31 +135,31 @@ var pointOfInterest = PointOfInterest(
     NumberOfPoints = 2
 )
 
-@Preview
-@Composable
-fun OperationalChargerCardPreview() {
-    ChargerCard(
-        pointOfInterest
-    )
-}
-
-
-@Preview
-@Composable
-fun UnknownChargerCardPreview() {
-    ChargerCard(
-        pointOfInterest.copy(
-            StatusType = StatusType.UNKNOWN
-        )
-    )
-}
-
-@Preview
-@Composable
-fun FutureChargerCardPreview() {
-    ChargerCard(
-        pointOfInterest.copy(
-            StatusType = StatusType.PLANNED_FOR_FUTURE
-        )
-    )
-}
+//@Preview
+//@Composable
+//fun OperationalChargerCardPreview() {
+//    ChargerCard(
+//        pointOfInterest
+//    )
+//}
+//
+//
+//@Preview
+//@Composable
+//fun UnknownChargerCardPreview() {
+//    ChargerCard(
+//        pointOfInterest.copy(
+//            StatusType = StatusType.UNKNOWN
+//        )
+//    )
+//}
+//
+//@Preview
+//@Composable
+//fun FutureChargerCardPreview() {
+//    ChargerCard(
+//        pointOfInterest.copy(
+//            StatusType = StatusType.PLANNED_FOR_FUTURE
+//        )
+//    )
+//}

@@ -3,4 +3,7 @@
     <string
         name="charger_screen_title"
         >Nearest chargers</string>
+    <string
+        name="detail_screen_navigation_back"
+        >Go back</string>
 </resources>
