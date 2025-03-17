@@ -23,9 +23,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.core.ui.conditional
-import com.example.feature.chargers.domain.model.AddressInfo
-import com.example.feature.chargers.domain.model.PointOfInterest
-import com.example.feature.chargers.domain.model.StatusType
+import com.example.core.model.AddressInfo
+import com.example.core.model.PointOfInterest
+import com.example.core.model.StatusType
 
 @Composable
 fun ChargerCard(

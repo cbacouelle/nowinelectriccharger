@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(projects.feature.chargers.domain)
+    implementation(projects.core.model)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

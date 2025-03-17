@@ -6,13 +6,13 @@ import com.example.feature.chargers.data.api.PointOfInterestDto
 import com.example.feature.chargers.data.api.UserCommentDto
 import com.example.feature.chargers.data.api.UserCommentTypeDto
 import com.example.feature.chargers.data.api.UserDto
-import com.example.feature.chargers.domain.model.AddressInfo
-import com.example.feature.chargers.domain.model.CommentType
-import com.example.feature.chargers.domain.model.MediaItem
-import com.example.feature.chargers.domain.model.PointOfInterest
-import com.example.feature.chargers.domain.model.StatusType
-import com.example.feature.chargers.domain.model.User
-import com.example.feature.chargers.domain.model.UserComment
+import com.example.core.model.AddressInfo
+import com.example.core.model.CommentType
+import com.example.core.model.MediaItem
+import com.example.core.model.PointOfInterest
+import com.example.core.model.StatusType
+import com.example.core.model.User
+import com.example.core.model.UserComment
 
 class PointOfInterestMapper {
 
@@ -45,45 +45,48 @@ class PointOfInterestMapper {
 
 class MediaItemMapper {
     companion object {
-        fun map(mediaItemDto: MediaItemDto): MediaItem = MediaItem(
-            ID = mediaItemDto.ID,
-            ChargePointID = mediaItemDto.ChargePointID,
-            ItemURL = mediaItemDto.ItemURL,
-            ItemThumbnailURL = mediaItemDto.ItemThumbnailURL,
-            Comment = mediaItemDto.Comment,
-            IsEnabled = mediaItemDto.IsEnabled,
-            DateCreated = mediaItemDto.DateCreated,
-            IsVideo = mediaItemDto.IsVideo,
-            IsFeaturedItem = mediaItemDto.IsFeaturedItem,
-            IsExternalResource = mediaItemDto.IsExternalResource,
-            User = UserMapper.map(mediaItemDto.User),
-        )
+        fun map(mediaItemDto: MediaItemDto): MediaItem =
+            MediaItem(
+                ID = mediaItemDto.ID,
+                ChargePointID = mediaItemDto.ChargePointID,
+                ItemURL = mediaItemDto.ItemURL,
+                ItemThumbnailURL = mediaItemDto.ItemThumbnailURL,
+                Comment = mediaItemDto.Comment,
+                IsEnabled = mediaItemDto.IsEnabled,
+                DateCreated = mediaItemDto.DateCreated,
+                IsVideo = mediaItemDto.IsVideo,
+                IsFeaturedItem = mediaItemDto.IsFeaturedItem,
+                IsExternalResource = mediaItemDto.IsExternalResource,
+                User = UserMapper.map(mediaItemDto.User),
+            )
     }
 }
 
 class UserCommentMapper {
     companion object {
-        fun map(userCommentDto: UserCommentDto): UserComment = UserComment(
-            ID = userCommentDto.ID,
-            ChargePointID = userCommentDto.ChargePointID,
-            CommentTypeID = userCommentDto.CommentTypeID,
-            CommentType = CommentTypeMapper.map(userCommentDto.CommentType),
-            UserName = userCommentDto.UserName,
-            Comment = userCommentDto.Comment,
-            RelatedURL = userCommentDto.RelatedURL,
-            DateCreated = userCommentDto.DateCreated,
-            User = userCommentDto.User?.let { UserMapper.map(it) },
-            CheckinStatusTypeID = userCommentDto.CheckinStatusTypeID,
-        )
+        fun map(userCommentDto: UserCommentDto): UserComment =
+            UserComment(
+                ID = userCommentDto.ID,
+                ChargePointID = userCommentDto.ChargePointID,
+                CommentTypeID = userCommentDto.CommentTypeID,
+                CommentType = CommentTypeMapper.map(userCommentDto.CommentType),
+                UserName = userCommentDto.UserName,
+                Comment = userCommentDto.Comment,
+                RelatedURL = userCommentDto.RelatedURL,
+                DateCreated = userCommentDto.DateCreated,
+                User = userCommentDto.User?.let { UserMapper.map(it) },
+                CheckinStatusTypeID = userCommentDto.CheckinStatusTypeID,
+            )
     }
 }
 
 class CommentTypeMapper {
     companion object {
-        fun map(commentTypeDto: UserCommentTypeDto): CommentType = CommentType(
-            ID = commentTypeDto.ID,
-            Title = commentTypeDto.Title,
-        )
+        fun map(commentTypeDto: UserCommentTypeDto): CommentType =
+            CommentType(
+                ID = commentTypeDto.ID,
+                Title = commentTypeDto.Title,
+            )
     }
 }
 

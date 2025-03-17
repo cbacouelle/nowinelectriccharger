@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.example.feature.chargers.domain.ElectricChargerRepository
-import com.example.feature.chargers.domain.model.PointOfInterest
+import com.example.core.model.PointOfInterest
 import com.example.feature.chargers.ui.navigation.DetailRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,12 +1,17 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.example.core.model"
+    namespace = "com.example.core.database"
     compileSdk = 35
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 
     defaultConfig {
         minSdk = 35
@@ -31,14 +36,18 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
 }
 
 dependencies {
+    ksp(libs.room.compiler)
 
-    implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    implementation(projects.core.model)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

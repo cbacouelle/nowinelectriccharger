@@ -1,7 +1,7 @@
 package com.example.feature.chargers.domain
 
 import android.location.Location
-import com.example.feature.chargers.domain.model.PointOfInterest
+import com.example.core.model.PointOfInterest
 import kotlinx.coroutines.flow.Flow
 
 interface ElectricChargerRepository {

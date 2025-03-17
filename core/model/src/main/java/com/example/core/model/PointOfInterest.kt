@@ -1,4 +1,4 @@
-package com.example.feature.chargers.domain.model
+package com.example.core.model
 
 import kotlinx.serialization.Serializable
 

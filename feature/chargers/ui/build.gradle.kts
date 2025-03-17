@@ -63,6 +63,7 @@ dependencies {
     implementation(projects.feature.chargers.domain)
     implementation(projects.theme)
     implementation(projects.core.ui)
+    implementation(projects.core.model)
     implementation(projects.core.utils)
     implementation(projects.feature.location.domain)
 

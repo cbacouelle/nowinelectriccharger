@@ -16,9 +16,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.ui.shimmerEffect
-import com.example.feature.chargers.domain.model.AddressInfo
-import com.example.feature.chargers.domain.model.PointOfInterest
-import com.example.feature.chargers.domain.model.StatusType
+import com.example.core.model.AddressInfo
+import com.example.core.model.PointOfInterest
+import com.example.core.model.StatusType
 import com.example.theme.NowinelectricchargerTheme
 
 @Composable

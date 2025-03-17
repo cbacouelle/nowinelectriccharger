@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.utils.isLocationPermissionNotGranted
 import com.example.feature.chargers.domain.GetElectricChargersUseCase
-import com.example.feature.chargers.domain.model.PointOfInterest
+import com.example.core.model.PointOfInterest
 import com.example.feature.location.domain.GetLocationUseCase
 import com.example.feature.location.domain.SetLocationUseCase
 import com.google.android.gms.location.FusedLocationProviderClient

@@ -4,7 +4,7 @@ import android.location.Location
 import com.example.feature.chargers.data.api.ElectricChargerApiClient
 import com.example.feature.chargers.data.mapper.PointOfInterestMapper
 import com.example.feature.chargers.domain.ElectricChargerRepository
-import com.example.feature.chargers.domain.model.PointOfInterest
+import com.example.core.model.PointOfInterest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
