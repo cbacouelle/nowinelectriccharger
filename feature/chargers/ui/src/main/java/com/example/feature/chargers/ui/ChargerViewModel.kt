@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core.utils.isLocationPermissionNotGranted
+import com.example.core.utils.isLocationPermissionGranted
 import com.example.feature.chargers.domain.GetElectricChargersUseCase
 import com.example.feature.chargers.domain.model.PointOfInterest
 import com.example.feature.location.domain.GetLocationUseCase
@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,7 +57,7 @@ class ChargerViewModel @Inject constructor(
         )
 
     private fun checkLocationPermission() {
-        if (!isLocationPermissionNotGranted(context)) {
+        if (context.isLocationPermissionGranted()) {
             getLocation()
         }
     }
@@ -67,7 +68,9 @@ class ChargerViewModel @Inject constructor(
 
         fusedLocationClient.getCurrentLocation(100, cancellationTokenSource.token)
             .addOnSuccessListener { location ->
-                this.setLocationUseCase(location)
+                viewModelScope.launch {
+                    setLocationUseCase(location)
+                }
             }
             .addOnFailureListener { exception ->
                 println("Location Oops location failed with exception: $exception")

@@ -11,9 +11,10 @@ class DefaultLocationDataRepository @Inject constructor(
 ): LocationDataRepository {
 
     override val location: Flow<Location> = locationDatasource.location.map { locationData ->
-        val locationAndroid = Location("")
-        locationAndroid.longitude = locationData.longitude
-        locationAndroid.latitude = locationData.latitude
+        val locationAndroid = Location("").apply {
+            longitude = locationData.longitude
+            latitude = locationData.latitude
+        }
         locationAndroid
     }
 

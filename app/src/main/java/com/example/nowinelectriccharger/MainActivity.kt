@@ -1,6 +1,5 @@
 package com.example.nowinelectriccharger
 
-import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
-import com.example.core.utils.isLocationPermissionNotGranted
+import com.example.core.utils.isLocationPermissionGranted
 import com.example.feature.chargers.ui.ChargerViewModel
 import com.example.theme.NowinelectricchargerTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,11 +25,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        askForLocationPermission();
+        askForLocationPermission()
 
         enableEdgeToEdge()
         setContent {
-            val appState = rememberNowInElectricChargerAppState();
+            val appState = rememberNowInElectricChargerAppState()
             NowinelectricchargerTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NowInElectricChargerApp(
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun askForLocationPermission() {
-        if (isLocationPermissionNotGranted(this)) {
+        if (!isLocationPermissionGranted()) {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(
