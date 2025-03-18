@@ -1,31 +1,45 @@
 package com.example.feature.chargers.ui
 
-import android.location.Location
-import androidx.hilt.navigation.compose.hiltViewModel
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.utils.isLocationPermissionGranted
 import com.example.feature.chargers.domain.GetElectricChargersUseCase
 import com.example.feature.chargers.domain.model.PointOfInterest
+import com.example.feature.location.domain.GetLocationUseCase
+import com.example.feature.location.domain.SetLocationUseCase
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.tasks.CancellationTokenSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ChargerViewModel @Inject constructor(
     private val getElectricChargersUseCase: GetElectricChargersUseCase,
+    getLocationUseCase: GetLocationUseCase,
+    private val setLocationUseCase: SetLocationUseCase,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    private val _currentLocation = MutableStateFlow<Location?>(null)
-    private val currentLocation = _currentLocation.asStateFlow()
+    private var fusedLocationClient: FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(context)
+    private val currentLocation = getLocationUseCase()
+
+    init {
+        checkLocationPermission()
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val electricChargersViewState: StateFlow<ChargerViewState> =
@@ -42,8 +56,25 @@ class ChargerViewModel @Inject constructor(
             initialValue = ChargerViewState.Loading,
         )
 
-    fun setCurrentLocation(location: Location) {
-        _currentLocation.value = location;
+    private fun checkLocationPermission() {
+        if (context.isLocationPermissionGranted()) {
+            getLocation()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+        val cancellationTokenSource = CancellationTokenSource()
+
+        fusedLocationClient.getCurrentLocation(100, cancellationTokenSource.token)
+            .addOnSuccessListener { location ->
+                viewModelScope.launch {
+                    setLocationUseCase(location)
+                }
+            }
+            .addOnFailureListener { exception ->
+                println("Location Oops location failed with exception: $exception")
+            }
     }
 
 }

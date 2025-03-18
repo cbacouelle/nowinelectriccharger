@@ -62,11 +62,22 @@ dependencies {
     implementation(projects.feature.search.ui)
     implementation(projects.feature.search.data)
     implementation(projects.feature.search.domain)
+
     implementation(projects.feature.chargers.domain)
     implementation(projects.feature.chargers.ui)
     implementation(projects.feature.chargers.data)
+
+    implementation(projects.feature.location.data)
+    implementation(projects.feature.location.domain)
+
     implementation(projects.network)
     implementation(projects.theme)
+    implementation(projects.core.datastore)
+    implementation(projects.core.datastoreProto)
+    implementation(projects.core.utils)
+    implementation(projects.core.model)
+    implementation(projects.core.ui)
+    implementation(projects.core.common)
 
     testImplementation(libs.junit)
 
