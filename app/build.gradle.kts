@@ -78,6 +78,7 @@ dependencies {
     implementation(projects.core.model)
     implementation(projects.core.ui)
     implementation(projects.core.common)
+    implementation(projects.core.database)
 
     testImplementation(libs.junit)
 

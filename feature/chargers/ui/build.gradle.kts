@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:database"))
     ksp(libs.hilt.compiler)
 
     implementation(libs.androidx.core.ktx)

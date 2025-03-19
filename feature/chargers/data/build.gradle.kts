@@ -37,6 +37,7 @@ android {
 
 dependencies {
     api(libs.androidx.datastore)
+    implementation(project(":core:database"))
 
     ksp(libs.hilt.compiler)
 
