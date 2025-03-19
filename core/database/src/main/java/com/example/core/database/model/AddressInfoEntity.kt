@@ -3,6 +3,7 @@ package com.example.core.database.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.core.model.AddressInfo
 
 @Entity(
     tableName = "address_info"
@@ -50,11 +51,34 @@ data class AddressInfoEntity(
     val relatedUrl: String?,
 
     @ColumnInfo(name = "distance")
-    val distance: String?,
+    val distance: Double?,
+
+    @ColumnInfo(name = "readable_distance")
+    val readableDistance: String?,
 
     @ColumnInfo(name = "title")
     val title: String?,
 
     @ColumnInfo(name = "charge_point_id", index = true)
     val chargePointId: Int,
-)
+) {
+    fun toDomainModel() = AddressInfo(
+        ID = id,
+        AddressLine1 = addressLine1,
+        AddressLine2 = addressLine2,
+        Town = town,
+        StateOrProvince = stateOrProvince,
+        Postcode = postcode,
+        CountryID = countryId,
+        Latitude = latitude,
+        Longitude = longitude,
+        ContactTelephone1 = contactTelephone1,
+        ContactTelephone2 = contactTelephone2,
+        ContactEmail = contactEmail,
+        AccessComments = accessComments,
+        RelatedURL = relatedUrl,
+        Distance = distance,
+        ReadableDistance = readableDistance,
+        Title = title
+    )
+}

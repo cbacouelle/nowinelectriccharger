@@ -1,6 +1,6 @@
 package com.example.feature.chargers.data.di
 
-import com.example.feature.chargers.data.repository.DefaultElectricChargerRepository
+import com.example.feature.chargers.data.repository.OfflineFirstElectricChargerRepository
 import com.example.feature.chargers.domain.ElectricChargerRepository
 import dagger.Binds
 import dagger.Module
@@ -13,6 +13,6 @@ interface ElectricChargerRepositoryModule {
 
     @Binds
     fun bindsElectricChargerRepository(
-        electricChargerRepository: DefaultElectricChargerRepository,
+        electricChargerRepository: OfflineFirstElectricChargerRepository,
     ): ElectricChargerRepository
 }

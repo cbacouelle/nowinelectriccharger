@@ -1,9 +1,13 @@
 package com.example.core.database.model
 
+import android.provider.MediaStore.Audio.Media
 import androidx.room.ColumnInfo
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import androidx.room.Relation
+import com.example.core.model.MediaItem
 import com.example.core.model.User
 
 @Entity(
@@ -55,3 +59,27 @@ data class MediaItemEntity(
     @ColumnInfo(name = "user_id", index = true)
     val userId: Int,
 )
+
+data class PopulatedMediaItem(
+    @Embedded val entity: MediaItemEntity,
+    @Relation(
+        parentColumn = "user_id",
+        entityColumn = "id",
+        entity = UserEntity::class
+    )
+    val user: UserEntity
+) {
+    fun toDomainModel() = MediaItem(
+        ID = entity.id,
+        ChargePointID = entity.chargePointId,
+        ItemURL = entity.itemUrl,
+        ItemThumbnailURL = entity.itemThumbnailUrl,
+        Comment = entity.comment,
+        IsEnabled = entity.isEnabled,
+        DateCreated = entity.dateCreated,
+        IsVideo = entity.isVideo,
+        IsFeaturedItem = entity.isFeaturedItem,
+        IsExternalResource = entity.isExternalResource,
+        User = user.toDomainModel()
+    )
+}

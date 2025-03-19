@@ -10,6 +10,6 @@ interface ElectricChargerRepository {
 
     val pointOfInterests: Flow<List<PointOfInterest>>
 
-    suspend fun getNearestElectricChargers(currentLocation: Location): List<PointOfInterest>
+    suspend fun getPointOfInterests(currentLocation: Location): Flow<List<PointOfInterest>>
 
 }

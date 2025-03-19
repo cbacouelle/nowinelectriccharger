@@ -21,12 +21,10 @@ data class UserEntity(
     @ColumnInfo(name = "profile_image_url")
     val profileImageURL: String
 ) {
-    companion object {
-        fun asExternalModel(user: UserEntity) = User(
-            ID = user.id,
-            Username = user.username,
-            ReputationPoints = user.reputationPoints,
-            ProfileImageURL = user.profileImageURL,
-        )
-    }
+    fun toDomainModel(): User = User(
+        ID = id,
+        Username = username,
+        ReputationPoints = reputationPoints,
+        ProfileImageURL = profileImageURL,
+    )
 }

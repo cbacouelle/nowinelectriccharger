@@ -90,7 +90,7 @@ fun ChargerCard(
                             modifier = Modifier.size(16.dp)
                         )
                         Text(
-                            text = "${charger.AddressInfo.Distance}",
+                            text = "${charger.AddressInfo.ReadableDistance}",
                             textAlign = TextAlign.End,
                             style = MaterialTheme.typography.labelSmall,
                             modifier = Modifier.padding(start = 4.dp)
@@ -118,7 +118,8 @@ var pointOfInterest = PointOfInterest(
         AddressLine1 = "Place du marché",
         Latitude = -44.567,
         Longitude = 23.987,
-        Distance = "3.4567",
+        ReadableDistance = "3.4567",
+        Distance = 3.4567,
         Title = "Place du marché",
         AddressLine2 = "",
         Town = "",

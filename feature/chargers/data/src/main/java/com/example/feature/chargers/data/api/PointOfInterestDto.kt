@@ -59,7 +59,7 @@ data class UserCommentDto(
     val ID: Int,
     val ChargePointID: Int,
     val CommentTypeID: Int,
-    val CommentType: UserCommentTypeDto,
+    val CommentType: CommentTypeDto,
     val UserName: String,
     val Comment: String,
     val RelatedURL: String?,
@@ -77,7 +77,7 @@ data class UserDto(
 )
 
 @Serializable
-data class UserCommentTypeDto(
+data class CommentTypeDto(
     val ID: Int,
     val Title: String,
 )

@@ -5,6 +5,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.Relation
+import com.example.core.model.PointOfInterest
 import com.example.core.model.StatusType
 
 @Entity(
@@ -39,7 +40,7 @@ data class PointOfInterestEntity(
     val dateLastStatusUpdate: String,
 
     @ColumnInfo(name = "address_info_id")
-    val addressInfoId: String,
+    val addressInfoId: Int,
 )
 
 data class PopulatedPointOfInterest(
@@ -50,14 +51,14 @@ data class PopulatedPointOfInterest(
         entityColumn = "charge_point_id",
         entity = UserCommentEntity::class
     )
-    val userComments: List<UserCommentEntity>,
+    val userComments: List<PopulatedUserComment>,
 
     @Relation(
         parentColumn = "id",
         entityColumn = "charge_point_id",
         entity = MediaItemEntity::class
     )
-    val mediaItems: List<MediaItemEntity>,
+    val mediaItems: List<PopulatedMediaItem>,
 
     @Relation(
         parentColumn = "id",
@@ -65,4 +66,19 @@ data class PopulatedPointOfInterest(
         entity = AddressInfoEntity::class
     )
     val addressInfo: AddressInfoEntity
-)
+) {
+    fun toDomainModel(): PointOfInterest = PointOfInterest(
+        ID = entity.id,
+        UUID = entity.uuid,
+        IsRecentlyVerified = entity.isRecentlyVerified,
+        DateLastVerified = entity.dateLastVerified,
+        UsageCost = entity.usageCost,
+        NumberOfPoints = entity.numberOfPoints,
+        GeneralComments = entity.generalComments,
+        StatusType = entity.statusType,
+        DateLastStatusUpdate = entity.dateLastStatusUpdate,
+        UserComments = userComments.map { it.toDomainModel() },
+        MediaItems = mediaItems.map { it.toDomainModel() },
+        AddressInfo = addressInfo.toDomainModel()
+    )
+}

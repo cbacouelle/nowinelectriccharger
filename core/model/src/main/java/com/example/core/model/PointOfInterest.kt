@@ -84,6 +84,7 @@ data class AddressInfo(
     val ContactEmail: String?,
     val AccessComments: String?,
     val RelatedURL: String?,
-    val Distance: String?,
+    val Distance: Double?,
+    val ReadableDistance: String?,
     val Title: String?,
 )

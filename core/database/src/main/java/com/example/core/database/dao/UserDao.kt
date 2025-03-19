@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.core.database.model.UserEntity
-import com.example.core.model.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,5 +14,9 @@ interface UserDao {
     fun getUsers(): Flow<List<UserEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: UserEntity)
+    fun saveUser(user: UserEntity)
+
+    @Query("DELETE FROM user")
+    fun truncateTable(): Int
+
 }
