@@ -7,9 +7,10 @@ import com.example.core.database.dao.MediaItemDao
 import com.example.core.database.dao.PointOfInterestDao
 import com.example.core.database.dao.UserCommentDao
 import com.example.core.database.dao.UserDao
-import com.example.core.database.model.AddressInfoEntity
+import com.example.core.database.model.PopulatedPointOfInterest
 import com.example.core.model.PointOfInterest
 import com.example.feature.chargers.data.api.ElectricChargerApiClient
+import com.example.feature.chargers.data.api.PointOfInterestDto
 import com.example.feature.chargers.data.mapper.AddressInfoMapper
 import com.example.feature.chargers.data.mapper.CommentTypeMapper
 import com.example.feature.chargers.data.mapper.MediaItemMapper
@@ -17,12 +18,9 @@ import com.example.feature.chargers.data.mapper.PointOfInterestMapper
 import com.example.feature.chargers.data.mapper.UserCommentMapper
 import com.example.feature.chargers.data.mapper.UserMapper
 import com.example.feature.chargers.domain.ElectricChargerRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
+import java.net.UnknownHostException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -37,32 +35,33 @@ class OfflineFirstElectricChargerRepository @Inject constructor(
     private val mediaItemDao: MediaItemDao,
 ) : ElectricChargerRepository {
 
-    private val _pointOfInterests = MutableStateFlow<List<PointOfInterest>>(emptyList())
-    override val pointOfInterests = _pointOfInterests.asStateFlow()
+    override val pointOfInterests = pointOfInterestDao.getPointOfInterests()
+        .map { it.map(PopulatedPointOfInterest::toDomainModel) }
 
-    override suspend fun getPointOfInterests(currentLocation: Location): Flow<List<PointOfInterest>> =
-        withContext(
-            Dispatchers.Default
-        ) {
-            pointOfInterestDao.getPointOfInterests()
-                .map { localPointOfInterests ->
-                    localPointOfInterests.map { it.toDomainModel() }.sortedBy { it.AddressInfo.Distance }
-                }.also {
-                    refreshPointOfInterests(currentLocation)
-                }
+    override suspend fun getPointOfInterests(currentLocation: Location): Flow<List<PointOfInterest>> {
+        try {
+            val pointOfInterests = fetchPointOfInterests(currentLocation)
+            saveLocalDatasource(pointOfInterests)
+        } catch (exception: UnknownHostException) {
+            println("ElectricChargerRepository: Unable to fetch remote datasource")
         }
+        return pointOfInterests
+    }
 
-    private suspend fun refreshPointOfInterests(currentLocation: Location) {
+    private suspend fun fetchPointOfInterests(currentLocation: Location): List<PointOfInterestDto> =
         electricChargerApiClient.getNearestElectricChargers(currentLocation)
-            .map {
-                addressInfoDao.truncateTable()
-                mediaItemDao.truncateTable()
-                userCommentDao.truncateTable()
-                commentTypeDao.truncateTable()
-                userDao.truncateTable()
-                pointOfInterestDao.truncateTable()
-                it
-            }
+
+
+    private fun saveLocalDatasource(pointOfInterestDtos: List<PointOfInterestDto>) {
+        pointOfInterestDtos.map {
+            addressInfoDao.truncateTable()
+            mediaItemDao.truncateTable()
+            userCommentDao.truncateTable()
+            commentTypeDao.truncateTable()
+            userDao.truncateTable()
+            pointOfInterestDao.truncateTable()
+            it
+        }
             .onEach {
                 addressInfoDao.saveAddressInfo(AddressInfoMapper.toEntityModel(it.AddressInfo, it))
                 pointOfInterestDao.savePointOfInterest(PointOfInterestMapper.toEntityModel(it))

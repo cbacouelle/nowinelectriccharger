@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.core.model.PointOfInterest
 import com.example.core.utils.isLocationPermissionNotGranted
 import com.example.feature.chargers.domain.GetElectricChargersUseCase
@@ -22,9 +21,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,7 +43,7 @@ class ChargerViewModel @Inject constructor(
     @OptIn(ExperimentalCoroutinesApi::class)
     val electricChargersViewState: StateFlow<ChargerViewState> =
         currentLocation.filterNotNull().flatMapLatest { currentLocation ->
-            getElectricChargersUseCase(currentLocation)
+            getElectricChargersUseCase(currentLocation).map { it -> it.sortedBy { it.AddressInfo.Distance } }
         }.map {
             ChargerViewState.Success(it)
         }.catch { error ->

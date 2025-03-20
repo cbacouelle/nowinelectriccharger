@@ -1,8 +1,6 @@
 package com.example.feature.chargers.data.api
 
 import android.location.Location
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import javax.inject.Inject
 
@@ -12,11 +10,10 @@ class ElectricChargerApiClient @Inject constructor(
 
     private val electricChargerApiService = retrofit.create(ElectricChargerApiService::class.java)
 
-    suspend fun getNearestElectricChargers(currentLocation: Location): List<PointOfInterestDto> = withContext(Dispatchers.IO) {
+    suspend fun getNearestElectricChargers(currentLocation: Location): List<PointOfInterestDto> =
         electricChargerApiService.getNearestElectricChargers(
             latitude = currentLocation.latitude,
             longitude = currentLocation.longitude
         )
-    }
 
 }
