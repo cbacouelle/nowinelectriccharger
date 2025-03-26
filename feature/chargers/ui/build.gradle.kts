@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.play.services.location)
+    implementation(libs.google.gson)
 
     implementation(projects.feature.chargers.domain)
     implementation(projects.theme)

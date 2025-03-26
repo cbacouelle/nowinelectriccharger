@@ -20,12 +20,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.core.ui.conditional
 import com.example.core.model.AddressInfo
+import com.example.core.model.DataProvider
+import com.example.core.model.OperatorInfo
 import com.example.core.model.PointOfInterest
 import com.example.core.model.StatusType
+import com.example.core.model.UsageType
 
 @Composable
 fun ChargerCard(
@@ -69,17 +73,17 @@ fun ChargerCard(
                                 .size(8.dp)
                                 .clip(RoundedCornerShape(100))
                                 .conditional(
-                                    charger.StatusType == StatusType.OPERATIONAL, {
+                                    charger.StatusType.ID == 50, {
                                         background(Color(0xff90be6d))
                                     }
                                 )
                                 .conditional(
-                                    charger.StatusType == StatusType.UNKNOWN, {
+                                    charger.StatusType.ID == 0, {
                                         background(Color(0xff577590))
                                     }
                                 )
                                 .conditional(
-                                    charger.StatusType == StatusType.PLANNED_FOR_FUTURE, {
+                                    charger.StatusType.ID == 150, {
                                         background(Color(0xfff8961e))
                                     }
                                 )
@@ -109,7 +113,12 @@ var pointOfInterest = PointOfInterest(
     IsRecentlyVerified = true,
     DateLastVerified = "yesterday",
     GeneralComments = "Fonctionne correctement",
-    StatusType = StatusType.OPERATIONAL,
+    StatusType = StatusType(
+        ID = 50,
+        Title = "Is ok",
+        IsOperational = true,
+        IsUserSelectable = true
+    ),
     DateLastStatusUpdate = "yesterday",
     UserComments = emptyList(),
     MediaItems = emptyList(),
@@ -122,7 +131,7 @@ var pointOfInterest = PointOfInterest(
         Distance = 3.4567,
         Title = "Place du marché",
         AddressLine2 = "",
-        Town = "",
+        Town = "Bordeaux",
         StateOrProvince = "",
         Postcode = "",
         CountryID = 0,
@@ -133,34 +142,80 @@ var pointOfInterest = PointOfInterest(
         RelatedURL = ""
     ),
     UsageCost = "",
-    NumberOfPoints = 2
+    NumberOfPoints = 2,
+    UsageTye = UsageType(
+        IsPayAtLocation = false,
+        IsMembershipRequired = true,
+        IsAccessKeyRequired = true,
+        ID = 54234,
+        Title = "Null"
+    ),
+    DataProvider = DataProvider(
+        WebsiteURL = "opendata.fr",
+        Comments = "",
+        IsRestrictedEdit = false,
+        IsOpenDataLicensed = true,
+        IsApprovedImport = true,
+        License = "super_license",
+        DateLastImported = "yesterday",
+        Id = 9423,
+        Title = "Best provider"
+    ),
+    Connections = emptyList(),
+    OperatorInfo = OperatorInfo(
+        ID = 5345,
+        Title = "Manual entry",
+        WebsiteURL = "",
+        Comments = "",
+        PhonePrimaryContact = "+53245345",
+        PhoneSecondaryContact = "",
+        IsPrivateIndividual = false,
+        AddressInfo = null,
+        BookingURL = "",
+        ContactEmail = "",
+        FaultReportEmail = "",
+        IsRestrictedEdit = true
+    )
 )
 
-//@Preview
-//@Composable
-//fun OperationalChargerCardPreview() {
-//    ChargerCard(
-//        pointOfInterest
-//    )
-//}
-//
-//
-//@Preview
-//@Composable
-//fun UnknownChargerCardPreview() {
-//    ChargerCard(
-//        pointOfInterest.copy(
-//            StatusType = StatusType.UNKNOWN
-//        )
-//    )
-//}
-//
-//@Preview
-//@Composable
-//fun FutureChargerCardPreview() {
-//    ChargerCard(
-//        pointOfInterest.copy(
-//            StatusType = StatusType.PLANNED_FOR_FUTURE
-//        )
-//    )
-//}
+@Preview
+@Composable
+fun OperationalChargerCardPreview() {
+    ChargerCard(
+        pointOfInterest,
+        onChargerCardClick = {}
+    )
+}
+
+
+@Preview
+@Composable
+fun UnknownChargerCardPreview() {
+    ChargerCard(
+        pointOfInterest.copy(
+            StatusType = StatusType(
+                ID = 0,
+                Title = "",
+                IsOperational = false,
+                IsUserSelectable = false
+            )
+        ),
+        onChargerCardClick = {}
+    )
+}
+
+@Preview
+@Composable
+fun FutureChargerCardPreview() {
+    ChargerCard(
+        pointOfInterest.copy(
+            StatusType = StatusType(
+                ID = 150,
+                Title = "",
+                IsOperational = false,
+                IsUserSelectable = false
+            )
+        ),
+        onChargerCardClick = {}
+    )
+}

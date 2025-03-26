@@ -15,15 +15,84 @@ data class PointOfInterest(
     val DateLastStatusUpdate: String,
     val UserComments: List<UserComment>,
     val MediaItems: List<MediaItem>,
-    val AddressInfo: AddressInfo
+    val AddressInfo: AddressInfo,
+    val OperatorInfo: OperatorInfo?,
+    val UsageTye: UsageType,
+    val DataProvider: DataProvider?,
+    val Connections: List<Connection>?
 )
 
 @Serializable
-enum class StatusType {
-    OPERATIONAL,
-    UNKNOWN,
-    PLANNED_FOR_FUTURE
-}
+data class Connection(
+    val Id: Int,
+    val ConnectionTypeID: Int,
+    val ConnectionType: ConnectionType,
+    val Reference: String?,
+    val StatusTypeID: Int?,
+    val Amps: Int?,
+    val Voltage: Int?,
+    val PowerKW: Int?,
+    val CurrentTypeID: Int?,
+    val CurrentType: CurrentType?,
+    val LevelID: Int?,
+    val Level: Level?,
+    val Quantity: Int?,
+    val Comments: String?,
+
+    )
+
+@Serializable
+data class ConnectionType(
+    val ID: Int,
+    val IsDiscontinued: Boolean?,
+    val IsObsolete: Boolean?,
+    val FormalName: String,
+    val Title: String,
+)
+
+@Serializable
+data class CurrentType(
+    val ID: Int,
+    val Title: String,
+)
+
+@Serializable
+data class Level(
+    val ID: Int,
+    val Title: String,
+    val IsFastChargeCapable: Boolean,
+    val Comments: String?,
+)
+
+@Serializable
+data class DataProvider(
+    val WebsiteURL: String?,
+    val Comments: String?,
+    val IsRestrictedEdit: Boolean?,
+    val IsOpenDataLicensed: Boolean?,
+    val IsApprovedImport: Boolean?,
+    val License: String?,
+    val DateLastImported: String?,
+    val Id: Int,
+    val Title: String?
+)
+
+@Serializable
+data class UsageType(
+    val IsPayAtLocation: Boolean?,
+    val IsMembershipRequired: Boolean?,
+    val IsAccessKeyRequired: Boolean?,
+    val ID: Int,
+    val Title: String
+)
+
+@Serializable
+data class StatusType(
+    val ID: Int,
+    val Title: String,
+    val IsOperational: Boolean?,
+    val IsUserSelectable: Boolean?,
+)
 
 @Serializable
 data class MediaItem(
@@ -87,4 +156,20 @@ data class AddressInfo(
     val Distance: Double?,
     val ReadableDistance: String?,
     val Title: String?,
+)
+
+@Serializable
+data class OperatorInfo(
+    val ID: Int,
+    val Title: String?,
+    val WebsiteURL: String?,
+    val Comments: String?,
+    val PhonePrimaryContact: String?,
+    val PhoneSecondaryContact: String?,
+    val IsPrivateIndividual: Boolean?,
+    val AddressInfo: AddressInfo?,
+    val BookingURL: String?,
+    val ContactEmail: String?,
+    val FaultReportEmail: String?,
+    val IsRestrictedEdit: Boolean?,
 )

@@ -1,6 +1,5 @@
 package com.example.core.database.model
 
-import android.provider.MediaStore.Audio.Media
 import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
@@ -8,7 +7,6 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import androidx.room.Relation
 import com.example.core.model.MediaItem
-import com.example.core.model.User
 
 @Entity(
     tableName = "media_item",

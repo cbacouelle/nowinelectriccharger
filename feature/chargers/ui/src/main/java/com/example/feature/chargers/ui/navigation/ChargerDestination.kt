@@ -2,6 +2,9 @@ package com.example.feature.chargers.ui.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -38,7 +41,9 @@ fun NavGraphBuilder.chargerDestination(
         composable<ChargerListRoute>() {
             ChargersScreen(
                 viewModel = viewModel,
-                onChargerCardClick = onChargerCardClick
+                onChargerCardClick = onChargerCardClick,
+                modifier = Modifier.padding(top = 24.dp)
+
             )
         }
         chargerDetailDestination()

@@ -18,8 +18,8 @@ fun NavController.navigateToDetail(
 }
 
 fun NavGraphBuilder.detailScreen(
-    showBackButton: Boolean,
     onBackButtonClick: () -> Unit,
+    onFavoriteButtonClick: () -> Unit,
 ) {
     composable<DetailRoute>(
         enterTransition = {
@@ -37,8 +37,8 @@ fun NavGraphBuilder.detailScreen(
 
     ) {
         DetailScreen(
-            showBackButton,
             onBackButtonClick,
+            onFavoriteButtonClick,
         )
     }
 }

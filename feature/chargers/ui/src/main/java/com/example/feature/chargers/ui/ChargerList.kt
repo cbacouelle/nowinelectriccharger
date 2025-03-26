@@ -17,9 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.core.ui.shimmerEffect
 import com.example.core.model.AddressInfo
+import com.example.core.model.DataProvider
+import com.example.core.model.OperatorInfo
 import com.example.core.model.PointOfInterest
 import com.example.core.model.StatusType
-import com.example.theme.NowinelectricchargerTheme
+import com.example.core.model.UsageType
+import com.example.theme.NowInElectricChargerTheme
 
 @Composable
 fun ChargerList(
@@ -74,7 +77,7 @@ fun ChargerList(
 @Composable
 private fun ChargerListLoadingPreview() {
     val viewState = ChargerViewState.Loading
-    NowinelectricchargerTheme {
+    NowInElectricChargerTheme {
         ChargerList(
             viewState = viewState,
             onChargerCardClick = { }
@@ -92,7 +95,12 @@ private fun ChargerListSuccessPreview() {
             IsRecentlyVerified = true,
             DateLastVerified = "yesterday",
             GeneralComments = "Fonctionne correctement",
-            StatusType = StatusType.UNKNOWN,
+            StatusType = StatusType(
+                ID = 0,
+                Title = "Unknown",
+                IsOperational = false,
+                IsUserSelectable = true
+            ),
             DateLastStatusUpdate = "yesterday",
             UserComments = emptyList(),
             MediaItems = emptyList(),
@@ -116,11 +124,44 @@ private fun ChargerListSuccessPreview() {
                 RelatedURL = ""
             ),
             UsageCost = "",
-            NumberOfPoints = 2
+            NumberOfPoints = 2,
+            UsageTye = UsageType(
+                IsPayAtLocation = false,
+                IsMembershipRequired = true,
+                IsAccessKeyRequired = true,
+                ID = 54234,
+                Title = "Null"
+            ),
+            DataProvider = DataProvider(
+                WebsiteURL = "opendata.fr",
+                Comments = "",
+                IsRestrictedEdit = false,
+                IsOpenDataLicensed = true,
+                IsApprovedImport = true,
+                License = "super_license",
+                DateLastImported = "yesterday",
+                Id = 9423,
+                Title = "Best provider"
+            ),
+            Connections = emptyList(),
+            OperatorInfo = OperatorInfo(
+                ID = 5345,
+                Title = "Manual entry",
+                WebsiteURL = "",
+                Comments = "",
+                PhonePrimaryContact = "+53245345",
+                PhoneSecondaryContact = "",
+                IsPrivateIndividual = false,
+                AddressInfo = null,
+                BookingURL = "",
+                ContactEmail = "",
+                FaultReportEmail = "",
+                IsRestrictedEdit = true
+            )
         )
     )
     val viewState = ChargerViewState.Success(chargers)
-    NowinelectricchargerTheme {
+    NowInElectricChargerTheme {
         ChargerList(
             viewState = viewState,
             onChargerCardClick = { }

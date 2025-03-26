@@ -74,6 +74,10 @@ class ChargerViewModel @Inject constructor(
             }
     }
 
+    fun handleFavoriteButtonClicked() {
+
+    }
+
 }
 
 sealed interface ChargerViewState {

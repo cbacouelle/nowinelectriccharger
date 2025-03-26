@@ -6,4 +6,35 @@
     <string
         name="detail_screen_navigation_back"
         >Go back</string>
+    <string
+        name="detail_screen_navigation_go_to_map"
+        >Go to map</string>
+
+    <string
+        name="address_info_card_title"
+        >Location details</string>
+    <string
+        name="address_info_address_line"
+        >Address:</string>
+    <string
+        name="address_info_contact_email"
+        >Email:</string>
+    <string
+        name="address_info_longitude"
+        >Longitude:</string>
+    <string
+        name="address_info_latitude"
+        >Latitude:</string>
+    <string
+        name="address_info_state"
+        >State:</string>
+    <string
+        name="address_info_comments"
+        >Access comments:</string>
+    <string
+        name="address_info_telephone"
+        >Telephone:</string>
+    <string
+        name="address_info_post_code"
+        >Post code:</string>
 </resources>

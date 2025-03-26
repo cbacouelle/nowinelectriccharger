@@ -1,7 +1,9 @@
 package com.example.nowinelectriccharger
 
-import android.content.pm.PackageManager
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -13,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.app.ActivityCompat
 import com.example.core.utils.isLocationPermissionNotGranted
 import com.example.feature.chargers.ui.ChargerViewModel
-import com.example.theme.NowinelectricchargerTheme
+import com.example.theme.NowInElectricChargerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,20 +25,24 @@ class MainActivity : AppCompatActivity() {
 
     private val chargerViewModel: ChargerViewModel by viewModels()
 
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.auto(Color.TRANSPARENT, Color.TRANSPARENT)
+        )
         super.onCreate(savedInstanceState)
 
         askForLocationPermission();
 
-        enableEdgeToEdge()
+
         setContent {
             val appState = rememberNowInElectricChargerAppState();
-            NowinelectricchargerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            NowInElectricChargerTheme {
+                Scaffold(modifier = Modifier.fillMaxSize()) {
                     NowInElectricChargerApp(
                         appState,
                         viewModel = chargerViewModel,
-                        modifier = Modifier.padding(innerPadding)
                     )
                 }
             }

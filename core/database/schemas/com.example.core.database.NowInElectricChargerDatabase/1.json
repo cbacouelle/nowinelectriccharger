@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b1e29465d1d6ced465fa23ce94ba5db2",
+    "identityHash": "faa995dd3d7569cb2d5934e4b6d14119",
     "entities": [
       {
         "tableName": "user",
@@ -454,7 +454,7 @@
       },
       {
         "tableName": "point_of_interest",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `uuid` TEXT NOT NULL, `is_recently_verified` INTEGER NOT NULL, `date_last_verified` TEXT NOT NULL, `usage_cost` TEXT, `number_of_points` INTEGER, `general_comments` TEXT, `status_type` TEXT NOT NULL, `date_last_status_update` TEXT NOT NULL, `address_info_id` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `uuid` TEXT NOT NULL, `is_recently_verified` INTEGER NOT NULL, `date_last_verified` TEXT NOT NULL, `usage_cost` TEXT, `number_of_points` INTEGER, `general_comments` TEXT, `status_type_id` INTEGER NOT NULL, `date_last_status_update` TEXT NOT NULL, `address_info_id` INTEGER NOT NULL, `usage_type_id` INTEGER NOT NULL, `data_provider_id` INTEGER, `operator_info_id` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -499,9 +499,9 @@
             "notNull": false
           },
           {
-            "fieldPath": "statusType",
-            "columnName": "status_type",
-            "affinity": "TEXT",
+            "fieldPath": "statusTypeId",
+            "columnName": "status_type_id",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -515,6 +515,554 @@
             "columnName": "address_info_id",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "usageTypeId",
+            "columnName": "usage_type_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dataProviderId",
+            "columnName": "data_provider_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "operatorInfoId",
+            "columnName": "operator_info_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "usage_type",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `is_pay_at_location` INTEGER, `is_membership_required` INTEGER, `is_access_key_required` INTEGER, `title` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPayAtLocation",
+            "columnName": "is_pay_at_location",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isMembershipRequired",
+            "columnName": "is_membership_required",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isAccessKeyRequired",
+            "columnName": "is_access_key_required",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "data_provider",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `website_url` TEXT, `comments` TEXT, `is_restricted_edit` INTEGER, `is_open_data_licensed` INTEGER, `is_approved_import` INTEGER, `license` TEXT, `date_last_imported` TEXT, `title` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "websiteUrl",
+            "columnName": "website_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "comments",
+            "columnName": "comments",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isRestrictedEdit",
+            "columnName": "is_restricted_edit",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isOpenDataLicensed",
+            "columnName": "is_open_data_licensed",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isApprovedImport",
+            "columnName": "is_approved_import",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "license",
+            "columnName": "license",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dateLastImported",
+            "columnName": "date_last_imported",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "status_type",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `is_user_selectable` INTEGER, `is_operational` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isUserSelectable",
+            "columnName": "is_user_selectable",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isOperational",
+            "columnName": "is_operational",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "connection",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `connection_type_id` INTEGER NOT NULL, `status_type_id` INTEGER, `level_id` INTEGER NOT NULL, `current_type_id` INTEGER, `reference` TEXT, `amps` INTEGER, `voltage` INTEGER, `power_kw` INTEGER, `quantity` INTEGER, `comments` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "connectionTypeId",
+            "columnName": "connection_type_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statusTypeId",
+            "columnName": "status_type_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "levelId",
+            "columnName": "level_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentTypeId",
+            "columnName": "current_type_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "reference",
+            "columnName": "reference",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "amps",
+            "columnName": "amps",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "voltage",
+            "columnName": "voltage",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "powerKw",
+            "columnName": "power_kw",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "comments",
+            "columnName": "comments",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_connection_connection_type_id",
+            "unique": false,
+            "columnNames": [
+              "connection_type_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_connection_connection_type_id` ON `${TABLE_NAME}` (`connection_type_id`)"
+          },
+          {
+            "name": "index_connection_status_type_id",
+            "unique": false,
+            "columnNames": [
+              "status_type_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_connection_status_type_id` ON `${TABLE_NAME}` (`status_type_id`)"
+          },
+          {
+            "name": "index_connection_level_id",
+            "unique": false,
+            "columnNames": [
+              "level_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_connection_level_id` ON `${TABLE_NAME}` (`level_id`)"
+          },
+          {
+            "name": "index_connection_current_type_id",
+            "unique": false,
+            "columnNames": [
+              "current_type_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_connection_current_type_id` ON `${TABLE_NAME}` (`current_type_id`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "point_of_interest_connection",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`connection_id` INTEGER NOT NULL, `point_of_interest_id` INTEGER NOT NULL, PRIMARY KEY(`connection_id`, `point_of_interest_id`), FOREIGN KEY(`point_of_interest_id`) REFERENCES `point_of_interest`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`connection_id`) REFERENCES `connection`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "connectionId",
+            "columnName": "connection_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "poiId",
+            "columnName": "point_of_interest_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "connection_id",
+            "point_of_interest_id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_point_of_interest_connection_connection_id",
+            "unique": false,
+            "columnNames": [
+              "connection_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_point_of_interest_connection_connection_id` ON `${TABLE_NAME}` (`connection_id`)"
+          },
+          {
+            "name": "index_point_of_interest_connection_point_of_interest_id",
+            "unique": false,
+            "columnNames": [
+              "point_of_interest_id"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_point_of_interest_connection_point_of_interest_id` ON `${TABLE_NAME}` (`point_of_interest_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "point_of_interest",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "point_of_interest_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "connection",
+            "onDelete": "CASCADE",
+            "onUpdate": "CASCADE",
+            "columns": [
+              "connection_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "connection_type",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `is_discontinued` INTEGER, `is_obsolete` INTEGER, `formal_name` TEXT NOT NULL, `title` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isDiscontinued",
+            "columnName": "is_discontinued",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isObsolete",
+            "columnName": "is_obsolete",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "formalName",
+            "columnName": "formal_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "level",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `is_fast_chargeable` INTEGER NOT NULL, `comments` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isFastChargeable",
+            "columnName": "is_fast_chargeable",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "comments",
+            "columnName": "comments",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "current_type",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "operator_info",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT, `website_url` TEXT, `comments` TEXT, `phone_primary_contact` TEXT, `phone_secondary_contact` TEXT, `is_private_individual` INTEGER, `booking_url` TEXT, `contact_email` TEXT, `fault_report_email` TEXT, `is_restricted_edit` INTEGER, `address_info_id` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "websiteUrl",
+            "columnName": "website_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "comments",
+            "columnName": "comments",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "phonePrimaryContact",
+            "columnName": "phone_primary_contact",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "phoneSecondaryContact",
+            "columnName": "phone_secondary_contact",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isPrivateIndividual",
+            "columnName": "is_private_individual",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bookingUrl",
+            "columnName": "booking_url",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contactEmail",
+            "columnName": "contact_email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "faultReportEmail",
+            "columnName": "fault_report_email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isRestrictedEdit",
+            "columnName": "is_restricted_edit",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "addressInfoId",
+            "columnName": "address_info_id",
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -530,7 +1078,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b1e29465d1d6ced465fa23ce94ba5db2')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'faa995dd3d7569cb2d5934e4b6d14119')"
     ]
   }
 }
